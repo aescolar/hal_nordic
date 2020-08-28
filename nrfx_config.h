@@ -379,6 +379,25 @@
 #define NRFX_WDT1_ENABLED 1
 #endif
 
+#if CONFIG_SOC_SERIES_BSIM_NRFXX
+/* When using simulated peripherals, all HAL functions are mocked. */
+#define NRF_STATIC_INLINE
+#define NRF_DECLARE_ONLY
+
+/*
+ * When nrfx drivers are compiled for a real SoC, this macro is inherited from
+ * CMSIS. The below definition is needed when those drivers are compiled for
+ * the simulated target.
+ */
+#define __STATIC_INLINE static inline
+
+/*
+ * Suppress use of anomaly workarounds in nrfx drivers that would directly
+ * access hardware registers.
+ */
+#define USE_WORKAROUND_FOR_ANOMALY_132 0
+
+#endif
 
 /*
  * For chips with TrustZone support, MDK provides CMSIS-Core peripheral

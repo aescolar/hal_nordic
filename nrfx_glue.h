@@ -283,6 +283,13 @@ extern const uint32_t z_bt_ctlr_used_nrf_ppi_groups;
  */
 void nrfx_isr(const void *irq_handler);
 
+#if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
+/* For BSIM we require redefining the pointers to the peripherals.
+ * As we only include nrfx.h, and not nrf.h, we here ensure that the peripherals
+ * are always redefined. */
+#include "nrfx_bsim_redef.h"
+#endif
+
 /** @} */
 
 #ifdef __cplusplus
