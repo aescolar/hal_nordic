@@ -381,9 +381,12 @@
 
 #if CONFIG_SOC_SERIES_BSIM_NRFXX
 /* When using simulated peripherals, all HAL functions are mocked. */
+#ifndef NRF_STATIC_INLINE
 #define NRF_STATIC_INLINE
+#endif
+#ifndef NRF_DONT_DECLARE_ONLY
 #define NRF_DECLARE_ONLY
-
+#endif
 /*
  * When nrfx drivers are compiled for a real SoC, this macro is inherited from
  * CMSIS. The below definition is needed when those drivers are compiled for
