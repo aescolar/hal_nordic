@@ -246,7 +246,7 @@ static void nvmc_word_write(uint32_t addr, uint32_t value)
     {}
 #endif
 
-    *(volatile uint32_t *)addr = value;
+    nrf_nvmc_word_write(addr, value);
     __DMB();
 }
 
