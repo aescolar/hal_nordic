@@ -35,6 +35,7 @@
 #define NRF_NVMC_H__
 
 #include <nrfx.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,6 +133,44 @@ NRF_STATIC_INLINE void nrf_nvmc_mode_set(NRF_NVMC_Type * p_reg,
 NRF_STATIC_INLINE void nrf_nvmc_nonsecure_mode_set(NRF_NVMC_Type *    p_reg,
                                                    nrf_nvmc_ns_mode_t mode);
 #endif
+
+/**
+ * @brief Function for writing a word into the flash
+ *
+ * Before calling this function, the caller must ensure that:
+ *  * The address is word aligned
+ *  * Write mode is enabled and
+ *  * The flash is ready to accept another write
+ *
+ * Users are recommended to use the NVMC driver
+ * nrfx_nvmc_word_write() instead.
+ *
+ * @param[in] addr  Address of the word to write
+ * @param[in] value Value to write
+ */
+NRF_STATIC_INLINE void nrf_nvmc_word_write(uint32_t addr,
+                                           uint32_t value);
+
+/**
+ * @brief Function for reading a word from the flash
+ *
+ * @param[in] addr  Address of the word to read
+ *
+ * @retval Value read from flash
+ */
+NRF_STATIC_INLINE uint32_t nrf_nvmc_word_read(uint32_t addr);
+
+/**
+ * @brief Function for reading a set of words from the flash
+ *
+ * @param[in] dest  Pointer to the buffer in which data will be copied
+ * @param[in] addr  Address of the first word to read
+ * @param[in] n     Number of bytes to read
+ *
+ */
+NRF_STATIC_INLINE void nrf_nvmc_buffer_read(void *dest,
+                                            uint32_t addr,
+                                            size_t n);
 
 /**
  * @brief Function for starting a single page erase in the Flash memory.
@@ -281,6 +320,24 @@ NRF_STATIC_INLINE void nrf_nvmc_nonsecure_mode_set(NRF_NVMC_Type *    p_reg,
     p_reg->CONFIGNS = (uint32_t)mode;
 }
 #endif
+
+NRF_STATIC_INLINE void nrf_nvmc_word_write(uint32_t addr,
+                                           uint32_t value)
+{
+    *(volatile uint32_t *)addr = value;
+}
+
+NRF_STATIC_INLINE uint32_t nrf_nvmc_word_read(uint32_t addr)
+{
+    return *(volatile uint32_t *)addr;
+}
+
+NRF_STATIC_INLINE void nrf_nvmc_buffer_read(void *dest,
+                                            uint32_t addr,
+                                            size_t n)
+{
+    memcpy(dest, (void*)addr, n);
+}
 
 NRF_STATIC_INLINE void nrf_nvmc_page_erase_start(NRF_NVMC_Type * p_reg,
                                                  uint32_t        page_addr)
