@@ -103,7 +103,7 @@ typedef enum
     NRF_VMC_RETENTION_S12 = VMC_RAM_POWER_S12RETENTION_Msk, ///< Keep RAM section S12 of the particular RAM block on or off in System ON mode.
     NRF_VMC_RETENTION_S13 = VMC_RAM_POWER_S13RETENTION_Msk, ///< Keep RAM section S13 of the particular RAM block on or off in System ON mode.
     NRF_VMC_RETENTION_S14 = VMC_RAM_POWER_S14RETENTION_Msk, ///< Keep RAM section S14 of the particular RAM block on or off in System ON mode.
-    NRF_VMC_RETENTION_S15 = VMC_RAM_POWER_S15RETENTION_Msk, ///< Keep RAM section S15 of the particular RAM block on or off in System ON mode.
+    NRF_VMC_RETENTION_S15 = (int)VMC_RAM_POWER_S15RETENTION_Msk, ///< Keep RAM section S15 of the particular RAM block on or off in System ON mode.
 #endif
 } nrf_vmc_retention_t;
 
